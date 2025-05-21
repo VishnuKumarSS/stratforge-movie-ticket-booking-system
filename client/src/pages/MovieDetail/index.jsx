@@ -315,16 +315,20 @@ export default function MovieDetail() {
                   <Button
                     key={showtime.id}
                     variant="outline"
-                    className="text-center"
+                    className="text-center h-auto py-3"
                     onClick={() => handleShowtimeSelect(showtime.id)}
                   >
-                    {format(
-                      new Date(`${showtime.date}T${showtime.time}`),
-                      "h:mm a"
-                    )}
-                    <span className="block text-xs text-slate-500 mt-1">
-                      {showtime.screen}
-                    </span>
+                    <div className="flex flex-col items-center">
+                      <span className="font-medium">
+                        {format(
+                          new Date(`${showtime.date}T${showtime.time}`),
+                          "h:mm a"
+                        )}
+                      </span>
+                      <span className="mt-2 px-2 py-0.5 bg-slate-100 text-slate-600 text-xs rounded-full">
+                        {showtime.screen}
+                      </span>
+                    </div>
                   </Button>
                 ))}
               </div>
