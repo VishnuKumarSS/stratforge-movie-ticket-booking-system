@@ -13,7 +13,11 @@ module.exports = {
       center: true,
       padding: "1rem",
       screens: {
-        "2xl": "1400px",
+        sm: "100%", // Optional: keeps container responsive
+        md: "100%",
+        lg: "100%",
+        xl: "1280px", // This is 7xl
+        "2xl": "1280px", // Also limit 2xl to 1280px (7xl)
       },
     },
     extend: {
