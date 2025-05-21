@@ -23,6 +23,13 @@ class ShowtimeSerializer(serializers.ModelSerializer):
         model = Showtime
         fields = ['id', 'movie', 'date', 'time', 'screen', 'seat_layout']
 
+class ShowtimeWithMovieSerializer(serializers.ModelSerializer):
+    movie_details = MovieSerializer(source='movie', read_only=True)
+    
+    class Meta:
+        model = Showtime
+        fields = ['id', 'movie', 'movie_details', 'date', 'time', 'screen', 'seat_layout']
+
 class ShowtimeDetailSerializer(serializers.ModelSerializer):
     movie = MovieSerializer(read_only=True)
     seat_layout = SeatLayoutSerializer(read_only=True)

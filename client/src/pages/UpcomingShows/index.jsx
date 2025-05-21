@@ -105,16 +105,58 @@ export default function UpcomingShows() {
             {showtimes.map((showtime) => (
               <div
                 key={showtime.id}
-                className="bg-white rounded-xl shadow-lg overflow-hidden border border-slate-200"
+                className="bg-white rounded-xl shadow-lg overflow-hidden border border-slate-200 flex flex-col h-full"
               >
-                <div className="p-6">
-                  <div className="flex justify-between items-start mb-4">
-                    <h2 className="text-xl font-bold">
+                {/* Movie Poster */}
+                <div className="relative h-48 overflow-hidden">
+                  {showtime.movie.poster_url ? (
+                    <div className="relative h-full">
+                      <img
+                        src={`http://localhost:8000${showtime.movie.poster_url}`}
+                        alt={showtime.movie.title}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                    </div>
+                  ) : (
+                    <div className="bg-slate-200 h-full flex items-center justify-center">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="48"
+                        height="48"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="text-slate-400"
+                      >
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                        <circle cx="12" cy="12" r="4"></circle>
+                      </svg>
+                    </div>
+                  )}
+                </div>
+
+                <div className="p-6 flex-grow">
+                  <div className="flex flex-col mb-4">
+                    <h2 className="text-xl font-bold mb-1">
                       {showtime.movie.title}
                     </h2>
-                    <span className="px-3 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">
-                      {showtime.movie.genre}
-                    </span>
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="px-3 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">
+                        {showtime.movie.genre}
+                      </span>
+                      <span className="text-slate-500 text-sm">
+                        {showtime.movie.duration} min
+                      </span>
+                    </div>
+                    {showtime.movie.short_description && (
+                      <p className="text-sm text-slate-600 mt-2 line-clamp-2">
+                        {showtime.movie.short_description}
+                      </p>
+                    )}
                   </div>
 
                   <div className="space-y-3 mb-6">
@@ -189,12 +231,21 @@ export default function UpcomingShows() {
                       <span>{showtime.screen}</span>
                     </div>
                   </div>
+                </div>
 
-                  <Button asChild className="w-full">
-                    <Link to={`/seat-selection/${showtime.id}`}>
-                      Book Tickets
-                    </Link>
-                  </Button>
+                <div className="p-4 pt-0">
+                  <div className="flex gap-4">
+                    <Button asChild className="w-full">
+                      <Link to={`/seat-selection/${showtime.id}`}>
+                        Book Tickets
+                      </Link>
+                    </Button>
+                    <Button variant="outline" asChild className="w-full">
+                      <Link to={`/movies/${showtime.movie.id}`}>
+                        View Details
+                      </Link>
+                    </Button>
+                  </div>
                 </div>
               </div>
             ))}

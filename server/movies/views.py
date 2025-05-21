@@ -6,6 +6,7 @@ from .models import Movie, SeatLayout, Showtime, Booking
 from .serializers import (
     MovieSerializer, MovieDetailSerializer, 
     ShowtimeSerializer, ShowtimeDetailSerializer,
+    ShowtimeWithMovieSerializer,
     BookingSerializer, BookingCreateSerializer
 )
 from django_filters import rest_framework as filters
@@ -35,18 +36,22 @@ class MovieListAPIView(generics.ListAPIView):
     serializer_class = MovieSerializer
     filter_backends = [DjangoFilterBackend, rest_filters.SearchFilter, rest_filters.OrderingFilter]
     filterset_class = MovieFilter
-    search_fields = ['title']
-    ordering_fields = ['title', 'release_date']
-
+    search_fields = ['title', 'description']
+    ordering_fields = ['release_date', 'title']
+    
 class MovieDetailAPIView(generics.RetrieveAPIView):
     queryset = Movie.objects.all()
     serializer_class = MovieDetailSerializer
-    lookup_field = 'pk'
 
 class ShowtimeListAPIView(generics.ListAPIView):
-    serializer_class = ShowtimeSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['movie', 'date']
+    
+    def get_serializer_class(self):
+        # Use ShowtimeWithMovieSerializer if movieDetails=true in query params
+        if self.request.query_params.get('movieDetails') == 'true':
+            return ShowtimeWithMovieSerializer
+        return ShowtimeSerializer
     
     def get_queryset(self):
         return Showtime.objects.all()

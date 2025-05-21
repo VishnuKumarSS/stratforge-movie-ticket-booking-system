@@ -161,7 +161,7 @@ export const getUserBookings = async (userEmail) => {
  * Get all upcoming showtimes
  * @param {Object} filters - Optional filters
  * @param {string} filters.date - Optional date filter (YYYY-MM-DD)
- * @returns {Promise<Array>} List of upcoming showtimes
+ * @returns {Promise<Array>} List of upcoming showtimes with movie details
  */
 export const getUpcomingShowtimes = async (filters = {}) => {
   try {
@@ -172,10 +172,20 @@ export const getUpcomingShowtimes = async (filters = {}) => {
       params.append("date", filters.date);
     }
 
+    // Request movie details to be included in response
+    params.append("movieDetails", "true");
+
     const response = await api.get(
       `/api/movies/showtimes/?${params.toString()}`
     );
-    return response.data.results || [];
+
+    const showtimes = response.data.results || [];
+
+    // Transform the response to have movie property contain movie_details
+    return showtimes.map((showtime) => ({
+      ...showtime,
+      movie: showtime.movie_details,
+    }));
   } catch (error) {
     const message =
       error.response?.data?.detail || "Failed to fetch upcoming showtimes";
