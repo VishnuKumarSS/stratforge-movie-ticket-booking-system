@@ -1,5 +1,7 @@
 # Startforge Assignment
 
+→ [View demo video](https://drive.google.com/file/d/1jRTEmqUvPlL9nkdFmOwB3wz4CJvxKf_7/view?usp=sharing)
+
 ## Directory Structure
 
 - `/client`: React frontend built with Vite
