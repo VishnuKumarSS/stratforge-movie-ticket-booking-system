@@ -72,6 +72,91 @@ export const getMovieById = async (id) => {
   }
 };
 
+/**
+ * Get showtimes for a movie
+ * @param {string|number} movieId - The ID of the movie
+ * @param {string} date - Optional date filter (YYYY-MM-DD)
+ * @returns {Promise<Array>} List of showtimes
+ */
+export const getShowtimes = async (movieId, date = null) => {
+  try {
+    const params = new URLSearchParams();
+    params.append("movie", movieId);
+
+    if (date) {
+      params.append("date", date);
+    }
+
+    const response = await api.get(
+      `/api/movies/showtimes/?${params.toString()}`
+    );
+    return response.data;
+  } catch (error) {
+    const message = error.response?.data?.detail || "Failed to fetch showtimes";
+    throw new Error(message);
+  }
+};
+
+/**
+ * Get showtime details including available and booked seats
+ * @param {string|number} showtimeId - The ID of the showtime
+ * @returns {Promise<Object>} Showtime details with seats
+ */
+export const getShowtimeDetails = async (showtimeId) => {
+  try {
+    const response = await api.get(`/api/movies/showtimes/${showtimeId}/`);
+    return response.data;
+  } catch (error) {
+    const message =
+      error.response?.data?.detail || "Failed to fetch showtime details";
+    throw new Error(message);
+  }
+};
+
+/**
+ * Create a new booking
+ * @param {Object} bookingData - The booking data
+ * @param {string} bookingData.user_email - User email
+ * @param {string} bookingData.user_name - User name
+ * @param {number} bookingData.showtime - Showtime ID
+ * @param {Array<string>} bookingData.seats - Array of seat IDs (e.g. ["A1", "B5"])
+ * @param {number} bookingData.amount_paid - Amount paid
+ * @returns {Promise<Object>} Created booking
+ */
+export const createBooking = async (bookingData) => {
+  try {
+    const response = await api.post(
+      "/api/movies/bookings/create/",
+      bookingData
+    );
+    return response.data;
+  } catch (error) {
+    const message = error.response?.data?.detail || "Failed to create booking";
+    throw new Error(message);
+  }
+};
+
+/**
+ * Get bookings for a user
+ * @param {string} userEmail - User email
+ * @returns {Promise<Array>} List of bookings
+ */
+export const getUserBookings = async (userEmail) => {
+  try {
+    const params = new URLSearchParams();
+    params.append("user_email", userEmail);
+
+    const response = await api.get(
+      `/api/movies/bookings/?${params.toString()}`
+    );
+    // Return the results array from the paginated response
+    return response.data.results || [];
+  } catch (error) {
+    const message = error.response?.data?.detail || "Failed to fetch bookings";
+    throw new Error(message);
+  }
+};
+
 export { api };
 
 // import { jwtDecode } from "jwt-decode";

@@ -1,8 +1,13 @@
-from rest_framework import generics
+from rest_framework import generics, status
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters as rest_filters
-from .models import Movie
-from .serializers import MovieSerializer, MovieDetailSerializer
+from rest_framework.response import Response
+from .models import Movie, SeatLayout, Showtime, Booking
+from .serializers import (
+    MovieSerializer, MovieDetailSerializer, 
+    ShowtimeSerializer, ShowtimeDetailSerializer,
+    BookingSerializer, BookingCreateSerializer
+)
 from django_filters import rest_framework as filters
 from django.db.models import Q
 import datetime
@@ -37,3 +42,38 @@ class MovieDetailAPIView(generics.RetrieveAPIView):
     queryset = Movie.objects.all()
     serializer_class = MovieDetailSerializer
     lookup_field = 'pk'
+
+class ShowtimeListAPIView(generics.ListAPIView):
+    serializer_class = ShowtimeSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['movie', 'date']
+    
+    def get_queryset(self):
+        return Showtime.objects.all()
+
+class ShowtimeDetailAPIView(generics.RetrieveAPIView):
+    queryset = Showtime.objects.all()
+    serializer_class = ShowtimeDetailSerializer
+    lookup_field = 'pk'
+
+class BookingListAPIView(generics.ListAPIView):
+    serializer_class = BookingSerializer
+    
+    def get_queryset(self):
+        user_email = self.request.query_params.get('user_email', None)
+        if user_email:
+            return Booking.objects.filter(user_email=user_email)
+        return Booking.objects.none()
+
+class BookingCreateAPIView(generics.CreateAPIView):
+    serializer_class = BookingCreateSerializer
+    
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        
+        # Return the created booking with full details
+        booking = Booking.objects.get(id=serializer.instance.id)
+        response_serializer = BookingSerializer(booking)
+        return Response(response_serializer.data, status=status.HTTP_201_CREATED)

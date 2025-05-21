@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
-import { getMovieById } from "@/services/api";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { getMovieById, getShowtimes } from "@/services/api";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { format } from "date-fns";
 
 export default function MovieDetail() {
   const { movieId } = useParams();
+  const navigate = useNavigate();
   const [movie, setMovie] = useState(null);
+  const [showtimes, setShowtimes] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(
+    format(new Date(), "yyyy-MM-dd")
+  );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -24,6 +30,43 @@ export default function MovieDetail() {
 
     fetchMovieDetails();
   }, [movieId]);
+
+  useEffect(() => {
+    const fetchShowtimes = async () => {
+      if (movie) {
+        try {
+          const response = await getShowtimes(movieId, selectedDate);
+          // Update to handle the new response format with results array
+          setShowtimes(response.results || []);
+        } catch (err) {
+          console.error("Failed to fetch showtimes:", err);
+        }
+      }
+    };
+
+    fetchShowtimes();
+  }, [movieId, selectedDate, movie]);
+
+  const handleShowtimeSelect = (showtimeId) => {
+    navigate(`/seat-selection/${showtimeId}`);
+  };
+
+  // Generate dates for the next 7 days
+  const getDates = () => {
+    const dates = [];
+    const today = new Date();
+
+    for (let i = 0; i < 7; i++) {
+      const date = new Date(today);
+      date.setDate(today.getDate() + i);
+      dates.push({
+        date: format(date, "yyyy-MM-dd"),
+        display: format(date, "EEE, MMM d"),
+      });
+    }
+
+    return dates;
+  };
 
   if (loading) {
     return (
@@ -230,12 +273,68 @@ export default function MovieDetail() {
                 <p className="text-slate-600 whitespace-pre-line mb-8 leading-relaxed">
                   {movie.description}
                 </p>
-
-                <Button variant="brutal" size="lg" className="w-full md:w-auto">
-                  Book Tickets
-                </Button>
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* Showtimes Section */}
+        <div className="p-8 bg-slate-50 border-t border-slate-200">
+          <h2 className="text-2xl font-bold mb-6 text-slate-800">
+            Book Tickets
+          </h2>
+
+          {/* Date Selection */}
+          <div className="mb-6">
+            <h3 className="text-sm font-semibold text-slate-500 mb-3">
+              Select Date
+            </h3>
+            <div className="flex overflow-x-auto gap-2 pb-2">
+              {getDates().map((date) => (
+                <Button
+                  key={date.date}
+                  variant={selectedDate === date.date ? "default" : "outline"}
+                  onClick={() => setSelectedDate(date.date)}
+                  className="whitespace-nowrap"
+                >
+                  {date.display}
+                </Button>
+              ))}
+            </div>
+          </div>
+
+          {/* Showtimes */}
+          <div>
+            <h3 className="text-sm font-semibold text-slate-500 mb-3">
+              Select Showtime
+            </h3>
+
+            {showtimes && showtimes.length > 0 ? (
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                {showtimes.map((showtime) => (
+                  <Button
+                    key={showtime.id}
+                    variant="outline"
+                    className="text-center"
+                    onClick={() => handleShowtimeSelect(showtime.id)}
+                  >
+                    {format(
+                      new Date(`${showtime.date}T${showtime.time}`),
+                      "h:mm a"
+                    )}
+                    <span className="block text-xs text-slate-500 mt-1">
+                      {showtime.screen}
+                    </span>
+                  </Button>
+                ))}
+              </div>
+            ) : (
+              <div className="p-6 border border-dashed border-slate-300 rounded-lg text-center">
+                <p className="text-slate-500">
+                  No showtimes available for this date
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </motion.div>

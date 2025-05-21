@@ -7,6 +7,8 @@ import LandingPage from "@pages/LandingPage";
 import Movies from "@pages/Movies";
 import NotFound from "@pages/NotFound";
 import MovieDetail from "@pages/MovieDetail";
+import SeatSelection from "@pages/SeatSelection";
+import BookingConfirmation from "@pages/BookingConfirmation";
 import UpcomingShows from "@pages/UpcomingShows";
 import BookingHistory from "@pages/BookingHistory";
 
@@ -26,6 +28,14 @@ const App = () => {
             <Route path="/" element={<LandingPage />} />
             <Route path="/movies" element={<Movies />} />
             <Route path="/movies/:movieId" element={<MovieDetail />} />
+            <Route
+              path="/seat-selection/:showtimeId"
+              element={<SeatSelection />}
+            />
+            <Route
+              path="/booking-confirmation"
+              element={<BookingConfirmation />}
+            />
             <Route path="/upcoming-shows" element={<UpcomingShows />} />
             <Route path="/booking-history" element={<BookingHistory />} />
             <Route path="*" element={<NotFound />} />
