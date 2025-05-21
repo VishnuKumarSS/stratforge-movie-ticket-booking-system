@@ -42,12 +42,13 @@ export default function Movies() {
   useEffect(() => {
     console.log("filters", filters);
 
-    // Skip API call if all filter fields are empty strings
+    // Skip API call if all filter fields are empty strings AND this is not a pagination request
     const isAllEmpty =
       filters.title === "" &&
       filters.genre === "" &&
       filters.release_date === "" &&
-      filters.ordering === "";
+      filters.ordering === "" &&
+      !filters.page;
 
     if (!isAllEmpty || !initialCall) {
       const fetchMovies = async () => {
