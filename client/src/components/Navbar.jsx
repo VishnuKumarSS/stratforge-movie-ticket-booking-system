@@ -5,14 +5,14 @@ import { cn } from "@/lib/utils";
 
 const Navbar = () => {
   return (
-    <header className="border-b container mx-auto flex h-16 items-center justify-between px-4 outline-dashed my-4 outline-2 outline-muted-foreground/30 rounded-2xl bg-primary/20 backdrop-blur-lg">
+    <header className="border-b container mx-auto flex h-16 items-center justify-between px-4 outline-dashed my-4 outline-2 outline-muted-foreground/30 rounded-2xl bg-primary/5 backdrop-blur-lg">
       <Link to="/" className="font-bold">
         Stratforge Movie Booking
       </Link>
 
       <nav className="flex items-center">
         <NavLink
-          to="/"
+          to="/movies"
           className={({ isActive }) =>
             cn(
               buttonVariants({ variant: "link" }),
