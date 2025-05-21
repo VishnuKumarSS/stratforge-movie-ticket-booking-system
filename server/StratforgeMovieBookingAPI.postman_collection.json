@@ -1,0 +1,276 @@
+{
+	"info": {
+		"_postman_id": "d8f2c0a6-8b4c-4d1f-9b1a-f28a6e5c6d7e",
+		"name": "Movie Booking API",
+		"description": "API endpoints for the Movie Booking application",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Movies",
+			"item": [
+				{
+					"name": "Get All Movies",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/movies/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"movies",
+								""
+							]
+						},
+						"description": "Retrieve a list of all available movies"
+					}
+				},
+				{
+					"name": "Get Movie Details",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/movies/1/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"movies",
+								"1",
+								""
+							]
+						},
+						"description": "Retrieve details of a specific movie by ID"
+					}
+				}
+			]
+		},
+		{
+			"name": "Showtimes",
+			"item": [
+				{
+					"name": "Get All Showtimes",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/movies/showtimes/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"movies",
+								"showtimes",
+								""
+							]
+						},
+						"description": "Retrieve a list of all showtimes"
+					}
+				},
+				{
+					"name": "Get Showtimes with Movie Details",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/movies/showtimes/?movieDetails=true",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"movies",
+								"showtimes",
+								""
+							],
+							"query": [
+								{
+									"key": "movieDetails",
+									"value": "true"
+								}
+							]
+						},
+						"description": "Retrieve showtimes with detailed movie information"
+					}
+				},
+				{
+					"name": "Get Showtimes by Movie",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/movies/showtimes/?movie=1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"movies",
+								"showtimes",
+								""
+							],
+							"query": [
+								{
+									"key": "movie",
+									"value": "1"
+								}
+							]
+						},
+						"description": "Filter showtimes by movie ID"
+					}
+				},
+				{
+					"name": "Get Showtimes by Date",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/movies/showtimes/?date=2023-08-15",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"movies",
+								"showtimes",
+								""
+							],
+							"query": [
+								{
+									"key": "date",
+									"value": "2023-08-15"
+								}
+							]
+						},
+						"description": "Filter showtimes by date (YYYY-MM-DD format)"
+					}
+				},
+				{
+					"name": "Get Showtime Details",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/movies/showtimes/1/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"movies",
+								"showtimes",
+								"1",
+								""
+							]
+						},
+						"description": "Retrieve details of a specific showtime by ID"
+					}
+				}
+			]
+		},
+		{
+			"name": "Bookings",
+			"item": [
+				{
+					"name": "Get User Bookings",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/movies/bookings/?user_email=user@example.com",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"movies",
+								"bookings",
+								""
+							],
+							"query": [
+								{
+									"key": "user_email",
+									"value": "user@example.com"
+								}
+							]
+						},
+						"description": "Retrieve bookings for a specific user email"
+					}
+				},
+				{
+					"name": "Create Booking",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_email\": \"user@example.com\",\n    \"user_name\": \"John Doe\",\n    \"showtime\": 1,\n    \"seats\": [\"A1\", \"A2\"]\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/movies/bookings/create/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"movies",
+								"bookings",
+								"create",
+								""
+							]
+						},
+						"description": "Create a new booking for movie tickets"
+					}
+				}
+			]
+		}
+	]
+} 
