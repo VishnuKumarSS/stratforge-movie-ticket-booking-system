@@ -60,8 +60,10 @@
    npm run dev
    ```
 
-## Usage
-
-1. Access the frontend at `http://localhost:5173`
-2. Access the Django admin interface at `http://localhost:8000/admin`
-3. API endpoints are available at `http://localhost:8000/api/movies`
+## Areas to be improved
+1. User authentication
+2. State management using libraries like zustand
+3. More intuitive design
+4. Containerization with Docker
+5. Documentation for API endpoints
+6. Caching strategies
