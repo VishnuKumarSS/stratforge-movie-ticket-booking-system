@@ -180,11 +180,7 @@ export default function BookingConfirmation() {
                     </div>
                     <div>
                       <p className="text-sm text-slate-500">Selected Seats</p>
-                      <p className="font-medium">
-                        {selectedSeats
-                          .map((seat) => `${seat.row}${seat.number}`)
-                          .join(", ")}
-                      </p>
+                      <p className="font-medium">{selectedSeats.join(", ")}</p>
                     </div>
                   </div>
                 </div>
