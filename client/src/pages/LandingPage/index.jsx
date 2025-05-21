@@ -51,10 +51,10 @@ export default function LandingPage() {
               key={movie.id}
               className="bg-white rounded-lg shadow-myshadow_sm border border-black overflow-hidden hover:shadow-myshadow_lg transition-shadow duration-300"
             >
-              <div className="h-64 bg-gray-200 overflow-hidden outline-dashed outline-2 outline-black">
+              <div className="h-64 bg-gray-200 overflow-hidden">
                 {movie.poster_url ? (
                   <img
-                    src={`http://localhost:8000/${movie.poster_url}`}
+                    src={`http://localhost:8000${movie.poster_url}`}
                     alt={movie.title}
                     className="w-full h-full object-cover"
                   />
@@ -66,8 +66,20 @@ export default function LandingPage() {
               </div>
               <div className="p-4">
                 <h2 className="text-xl font-semibold mb-2">{movie.title}</h2>
-                <p className="text-gray-600 line-clamp-3">
-                  {movie.description}
+                {movie.genre && (
+                  <div className="mb-2">
+                    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
+                      {movie.genre}
+                    </span>
+                    {movie.duration && (
+                      <span className="inline-block text-sm text-gray-600">
+                        {movie.duration} min
+                      </span>
+                    )}
+                  </div>
+                )}
+                <p className="text-gray-600 line-clamp-2">
+                  {movie.short_description || movie.description}
                 </p>
               </div>
             </Link>
