@@ -157,6 +157,32 @@ export const getUserBookings = async (userEmail) => {
   }
 };
 
+/**
+ * Get all upcoming showtimes
+ * @param {Object} filters - Optional filters
+ * @param {string} filters.date - Optional date filter (YYYY-MM-DD)
+ * @returns {Promise<Array>} List of upcoming showtimes
+ */
+export const getUpcomingShowtimes = async (filters = {}) => {
+  try {
+    const params = new URLSearchParams();
+
+    // Add date filter if provided
+    if (filters.date) {
+      params.append("date", filters.date);
+    }
+
+    const response = await api.get(
+      `/api/movies/showtimes/?${params.toString()}`
+    );
+    return response.data.results || [];
+  } catch (error) {
+    const message =
+      error.response?.data?.detail || "Failed to fetch upcoming showtimes";
+    throw new Error(message);
+  }
+};
+
 export { api };
 
 // import { jwtDecode } from "jwt-decode";
