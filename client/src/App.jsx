@@ -4,6 +4,7 @@ import Navbar from "@components/Navbar";
 import Footer from "@components/Footer";
 
 import LandingPage from "@pages/LandingPage";
+import Movies from "@pages/Movies";
 import NotFound from "@pages/NotFound";
 import MovieDetail from "@pages/MovieDetail";
 import UpcomingShows from "@pages/UpcomingShows";
@@ -23,6 +24,7 @@ const App = () => {
 
             {/* Public routes */}
             <Route path="/" element={<LandingPage />} />
+            <Route path="/movies" element={<Movies />} />
             <Route path="/movies/:movieId" element={<MovieDetail />} />
             <Route path="/upcoming-shows" element={<UpcomingShows />} />
             <Route path="/booking-history" element={<BookingHistory />} />

@@ -43,8 +43,8 @@ export default function MovieDetail() {
             Error loading movie details
           </h1>
           <p className="text-red-500 mb-6">{error}</p>
-          <Button variant="default" asChild>
-            <Link to="/">Back to movies</Link>
+          <Button variant="default">
+            <Link to="/movies">Back to movies</Link>
           </Button>
         </div>
       </div>
@@ -59,7 +59,7 @@ export default function MovieDetail() {
             Movie not found
           </h1>
           <Button variant="default" asChild>
-            <Link to="/">Back to movies</Link>
+            <Link to="/movies">Back to movies</Link>
           </Button>
         </div>
       </div>
@@ -70,7 +70,7 @@ export default function MovieDetail() {
     // <div className="">
     <div className="container mx-auto px-4">
       <Button variant="outline" asChild className="mb-8">
-        <Link to="/" className="flex items-center gap-2">
+        <Link to="/movies" className="flex items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"

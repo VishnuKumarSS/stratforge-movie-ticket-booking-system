@@ -12,7 +12,7 @@ const Navbar = () => {
 
       <nav className="flex items-center">
         <NavLink
-          to="/"
+          to="/movies"
           className={({ isActive }) =>
             cn(
               buttonVariants({ variant: "link" }),

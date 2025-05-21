@@ -11,11 +11,44 @@ const api = axios.create({
 
 /**
  * Get all movies from the server
- * @returns {Promise<Array>} List of movies
+ * @param {Object} filters - Optional filters for movies
+ * @param {string} filters.title - Filter by movie title
+ * @param {string} filters.genre - Filter by genre
+ * @param {string} filters.release_date - Filter by release date
+ * @param {number} filters.page - Page number for pagination
+ * @returns {Promise<Object>} List of movies with pagination data
  */
-export const getAllMovies = async () => {
+export const getAllMovies = async (filters = {}) => {
   try {
-    const response = await api.get("/api/movies/");
+    const params = new URLSearchParams();
+
+    // Add search parameter for title
+    if (filters.title) {
+      params.append("search", filters.title);
+    }
+
+    // Add filter parameters
+    if (filters.genre) {
+      params.append("genre", filters.genre);
+    }
+
+    if (filters.release_date) {
+      params.append("release_date", filters.release_date);
+    }
+
+    // Add pagination parameter
+    if (filters.page) {
+      params.append("page", filters.page);
+    }
+
+    // Add ordering if specified
+    if (filters.ordering) {
+      params.append("ordering", filters.ordering);
+    }
+
+    const response = await api.get(
+      `/api/movies/${params.toString() ? `?${params.toString()}` : ""}`
+    );
     return response.data;
   } catch (error) {
     const message = error.response?.data?.detail || "Failed to fetch movies";
