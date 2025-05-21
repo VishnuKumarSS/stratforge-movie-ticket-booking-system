@@ -4,7 +4,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-b container mx-auto flex h-16 items-center justify-between px-4 outline-dashed my-4 outline-2 outline-muted-foreground/30 rounded-2xl bg-primary/10 backdrop-blur-lg">
+    <footer className="border-b container mx-auto flex h-16 items-center justify-between px-4 outline-dashed my-4 outline-2 outline-muted-foreground/30 rounded-2xl bg-primary/5 backdrop-blur-lg">
       <p className="text-muted-foreground text-sm">
         &copy; {currentYear} Stratforge Assignment by Vishnu. All rights
         reserved.

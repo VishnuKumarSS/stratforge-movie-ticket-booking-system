@@ -31,7 +31,7 @@ curl -X POST http://127.0.0.1:8000/api/movies/bookings/create/ \
   -H "Content-Type: application/json" \
   -d '{
     "user_email": "user@example.com",
-    "user_name": "John Doe",
+    "user_name": "Test name",
     "showtime": 1,
     "seats": ["A1", "A2"]
   }'

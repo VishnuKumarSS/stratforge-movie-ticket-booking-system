@@ -247,7 +247,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"user_email\": \"user@example.com\",\n    \"user_name\": \"John Doe\",\n    \"showtime\": 1,\n    \"seats\": [\"A1\", \"A2\"]\n}"
+							"raw": "{\n    \"user_email\": \"user@example.com\",\n    \"user_name\": \"Example name\",\n    \"showtime\": 1,\n    \"seats\": [\"A1\", \"A2\"]\n}"
 						},
 						"url": {
 							"raw": "http://127.0.0.1:8000/api/movies/bookings/create/",

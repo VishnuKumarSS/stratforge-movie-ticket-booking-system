@@ -102,9 +102,9 @@ class Command(BaseCommand):
             
         # Sample user data
         user_names = [
-            "John Doe", "Jane Smith", "Michael Johnson", "Emily Williams",
-            "Robert Brown", "Sarah Davis", "David Miller", "Jennifer Wilson",
-            "James Moore", "Lisa Taylor", "Richard Anderson", "Patricia Thomas"
+            "Ganesh Kumar", "Saraswathi Selvam", "Murugan Mani", "Kaveri Kannan",
+            "Rajesh Ramasamy", "Shanthi Shanmugam", "Thamizhselvan Thanapalan", "Priya Balasubramanian",
+            "Karthikeyan Kannan", "Nithya Narayanan", "Sathya Shanmugam", "Parvathi Balakrishnan"
         ]
         
         email_domains = ["gmail.com", "yahoo.com", "outlook.com", "hotmail.com", "example.com"]
