@@ -27,7 +27,7 @@ export default function MovieDetail() {
 
   if (loading) {
     return (
-      <div className="container mx-auto px-4 py-16 min-h-screen bg-gradient-to-b from-slate-50 to-slate-100">
+      <div className="container mx-auto px-4 py-16 min-h-screen">
         <div className="flex items-center justify-center h-96">
           <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
         </div>
@@ -37,7 +37,7 @@ export default function MovieDetail() {
 
   if (error) {
     return (
-      <div className="container mx-auto px-4 py-16 min-h-screen bg-gradient-to-b from-slate-50 to-slate-100">
+      <div className="container mx-auto px-4 py-16 min-h-screen">
         <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-8 border border-slate-200">
           <h1 className="text-3xl font-bold mb-6 text-slate-800">
             Error loading movie details
