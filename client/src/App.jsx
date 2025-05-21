@@ -5,6 +5,9 @@ import Footer from "@components/Footer";
 
 import LandingPage from "@pages/LandingPage";
 import NotFound from "@pages/NotFound";
+import MovieDetail from "@pages/MovieDetail";
+import UpcomingShows from "@pages/UpcomingShows";
+import BookingHistory from "@pages/BookingHistory";
 
 const App = () => {
   return (
@@ -20,6 +23,9 @@ const App = () => {
 
             {/* Public routes */}
             <Route path="/" element={<LandingPage />} />
+            <Route path="/movies/:movieId" element={<MovieDetail />} />
+            <Route path="/upcoming-shows" element={<UpcomingShows />} />
+            <Route path="/booking-history" element={<BookingHistory />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>

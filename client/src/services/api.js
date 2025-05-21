@@ -15,10 +15,26 @@ const api = axios.create({
  */
 export const getAllMovies = async () => {
   try {
-    const response = await api.get("/movies/");
+    const response = await api.get("/api/movies/");
     return response.data;
   } catch (error) {
     const message = error.response?.data?.detail || "Failed to fetch movies";
+    throw new Error(message);
+  }
+};
+
+/**
+ * Get a movie by its ID
+ * @param {string|number} id - The ID of the movie to fetch
+ * @returns {Promise<Object>} Movie details
+ */
+export const getMovieById = async (id) => {
+  try {
+    const response = await api.get(`/api/movies/${id}/`);
+    return response.data;
+  } catch (error) {
+    const message =
+      error.response?.data?.detail || "Failed to fetch movie details";
     throw new Error(message);
   }
 };
