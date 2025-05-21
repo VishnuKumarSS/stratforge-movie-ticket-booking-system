@@ -25,6 +25,7 @@
 
 4. Run migrations:
    ```
+   python manage.py makemigrations
    python manage.py migrate
    ```
 
@@ -59,6 +60,27 @@
    ```
    npm run dev
    ```
+
+## Env setup
+```bash
+ENVIRONMENT=DEV
+SECRET_KEY=samplesecretkey
+
+# Database Configuration credentials supabase
+POSTGRES_DATABASE_NAME=db_name
+POSTGRES_USER=db_username
+POSTGRES_PASSWORD=db_password
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+
+# Base url of frontend and backend
+FRONTEND_BASE_URL=
+BACKEND_URL=
+
+# Supabase secret keys
+SUPABASE_PROJECT_URL=
+SUPABASE_API_KEY=
+```
 
 ## Areas to be improved
 1. Would have used TypeScript
