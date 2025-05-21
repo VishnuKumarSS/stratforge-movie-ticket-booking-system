@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function FilterPanel({ onFilterChange, genres }) {
   const [filters, setFilters] = useState({
@@ -30,6 +30,15 @@ export default function FilterPanel({ onFilterChange, genres }) {
     });
     onFilterChange({});
   };
+
+  // Apply filters when they change
+  useEffect(() => {
+    const debounceTimeout = setTimeout(() => {
+      onFilterChange(filters);
+    }, 500);
+
+    return () => clearTimeout(debounceTimeout);
+  }, [filters, onFilterChange]);
 
   return (
     <div className="bg-white p-4 rounded-lg outline-2 outline-dashed outline-slate-200 mb-6">
@@ -123,12 +132,6 @@ export default function FilterPanel({ onFilterChange, genres }) {
         </div>
 
         <div className="flex space-x-2">
-          <button
-            type="submit"
-            className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-          >
-            Apply Filters
-          </button>
           <button
             type="button"
             onClick={handleClear}

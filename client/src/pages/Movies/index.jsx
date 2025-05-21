@@ -1,21 +1,22 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { getAllMovies } from "@services/api";
 import MovieList from "@components/MovieList";
 import FilterPanel from "@components/FilterPanel";
 
 export default function Movies() {
   const [movies, setMovies] = useState([]);
+  const [initialCall, setInitialCall] = useState(true);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [filters, setFilters] = useState({});
   const [genres, setGenres] = useState([]);
+
   const [pagination, setPagination] = useState({
     count: 0,
     next: null,
     previous: null,
     current: 1,
   });
-  const isInitialMount = useRef(true);
 
   // Extract unique genres from movies
   useEffect(() => {
@@ -37,46 +38,52 @@ export default function Movies() {
     setFilters((prev) => ({ ...prev, page }));
   }, []);
 
-  // Function to fetch movies
-  const fetchMovies = useCallback(async (filterParams = {}) => {
-    setLoading(true);
-    try {
-      const data = await getAllMovies(filterParams);
+  // Fetch movies with filters
+  useEffect(() => {
+    console.log("filters", filters);
 
-      // Check if response has pagination structure
-      if (data.results) {
-        setMovies(data.results);
-        setPagination({
-          count: data.count || 0,
-          next: data.next,
-          previous: data.previous,
-          current: filterParams.page || 1,
-        });
-      } else {
-        // No pagination structure, just set the movies
-        setMovies(data);
+    // Skip API call if all filter fields are empty strings
+    const isAllEmpty =
+      filters.title === "" &&
+      filters.genre === "" &&
+      filters.release_date === "" &&
+      filters.ordering === "";
+
+    if (!isAllEmpty || !initialCall) {
+      const fetchMovies = async () => {
+        setLoading(true);
+        try {
+          const data = await getAllMovies(filters);
+
+          // Check if response has pagination structure
+          if (data.results) {
+            setMovies(data.results);
+            setPagination({
+              count: data.count || 0,
+              next: data.next,
+              previous: data.previous,
+              current: filters.page || 1,
+            });
+          } else {
+            // No pagination structure, just set the movies
+            setMovies(data);
+          }
+
+          setLoading(false);
+        } catch (err) {
+          setError(err.message);
+          setLoading(false);
+        }
+      };
+
+      if (Object.keys(filters).length !== 0) {
+        console.log("TEST", filters);
+        setInitialCall(false);
       }
 
-      setLoading(false);
-    } catch (err) {
-      setError(err.message);
-      setLoading(false);
+      fetchMovies();
     }
-  }, []);
-
-  // Initial load of movies
-  useEffect(() => {
-    fetchMovies();
-  }, [fetchMovies]);
-
-  // Fetch movies when filters change, but not on initial render
-  useEffect(() => {
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
-      return;
-    }
-    fetchMovies(filters);
-  }, [filters, fetchMovies]);
+  }, [filters]);
 
   return (
     <div className="container mx-auto px-4 py-8">
