@@ -3,7 +3,7 @@
 ## Directory Structure
 
 - `/client`: React frontend built with Vite
-- `/server`: Django REST Framework backend
+- `/server`: Django REST Framework backend that includes postman collection file
 
 ## Backend Setup
 
@@ -61,9 +61,10 @@
    ```
 
 ## Areas to be improved
-1. User authentication
+1. Would have used TypeScript
 2. State management using libraries like zustand
 3. More intuitive design
 4. Containerization with Docker
 5. Documentation for API endpoints
 6. Caching strategies
+7. User authentication
