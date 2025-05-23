@@ -1,9 +1,9 @@
-import os
 import random
 from django.core.management.base import BaseCommand
-from django.conf import settings
+
 from movies.models import Movie, SeatLayout, Showtime, Booking
-from datetime import date, datetime, timedelta, time
+from datetime import date, timedelta, time
+
 
 class Command(BaseCommand):
     help = 'Creates dummy movie data using existing poster files'
@@ -139,7 +139,7 @@ class Command(BaseCommand):
                 email = f"{user_name.lower().replace(' ', '.')}@{email_domain}"
                 
                 # Create the booking
-                booking = Booking.objects.create(
+                Booking.objects.create(
                     user_name=user_name,
                     user_email=email,
                     showtime=showtime,

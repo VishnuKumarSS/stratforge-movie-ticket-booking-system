@@ -2,7 +2,7 @@ from rest_framework import generics, status
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters as rest_filters
 from rest_framework.response import Response
-from .models import Movie, SeatLayout, Showtime, Booking
+from .models import Movie, Showtime, Booking
 from .serializers import (
     MovieSerializer, MovieDetailSerializer, 
     ShowtimeSerializer, ShowtimeDetailSerializer,
@@ -11,7 +11,7 @@ from .serializers import (
 )
 from django_filters import rest_framework as filters
 from django.db.models import Q
-import datetime
+
 
 class MovieFilter(filters.FilterSet):
     release_date = filters.CharFilter(method='filter_by_year')
