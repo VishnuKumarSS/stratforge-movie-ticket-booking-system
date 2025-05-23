@@ -11,12 +11,14 @@ import SeatSelection from "@pages/SeatSelection";
 import BookingConfirmation from "@pages/BookingConfirmation";
 import UpcomingShows from "@pages/UpcomingShows";
 import BookingHistory from "@pages/BookingHistory";
+import Squares from "@components/Squares";
 
 const App = () => {
   return (
     <div className="flex flex-col min-h-screen justify-between">
       <Router>
         <Navbar />
+        <Squares />
         <main className="flex-grow py-8">
           <Routes>
             {/* Protected Routes that require authentication
